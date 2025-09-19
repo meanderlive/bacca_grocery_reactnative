@@ -1,0 +1,54 @@
+# -------- Podfile (issue solved) --------
+# Resolve react_native_pods.rb with node to allow for hoisting
+require Pod::Executable.execute_command('node', ['-p',
+  'require.resolve(
+    "react-native/scripts/react_native_pods.rb",
+    {paths: [process.argv[1]]},
+  )', __dir__]).strip
+
+platform :ios, min_ios_version_supported
+
+prepare_react_native_project!
+
+# Hermes + static frameworks (keep as you had)
+use_frameworks! :linkage => :static
+
+target 'Justskipline' do
+  config = use_native_modules!
+
+  use_react_native!(
+    :path => config[:reactNativePath],
+    :app_path => "#{Pod::Config.instance.installation_root}/..",
+    :hermes_enabled => true,
+    :fabric_enabled => false,     # ← turn OFF Fabric
+    :new_arch_enabled => false    # ← turn OFF New Architecture (fixes RNDatePickerManager crash)
+  )
+
+  # Firebase
+  pod 'Firebase/Core'
+  pod 'Firebase/Messaging'
+  pod 'Firebase/Analytics'
+
+  # Stripe
+  pod 'StripePayments'
+  
+
+  # Make GoogleUtilities Swift-compatible
+  pod 'GoogleUtilities', :modular_headers => true
+
+  post_install do |installer|
+    react_native_post_install(
+      installer,
+      config[:reactNativePath],
+      :mac_catalyst_enabled => false
+    )
+
+    # (Optional) Make sure all pods build as static libs even with use_frameworks!
+    installer.pods_project.targets.each do |t|
+      t.build_configurations.each do |bc|
+        bc.build_settings['MACH_O_TYPE'] = 'staticlib' if t.name == 'React-Codegen'
+      end
+    end
+  end
+end
+# -------- end Podfile --------

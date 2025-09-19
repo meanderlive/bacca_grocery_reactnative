@@ -1,0 +1,11 @@
+// module.exports = {
+//   assets: [ './assets/fonts/', './node_modules/react-native-vector-icons/Fonts'],
+// }; 
+
+
+module.exports = {
+  assets: ['./assets/fonts/'], // Only custom fonts, NOT vector icons
+};
+
+
+// module.exports = {};

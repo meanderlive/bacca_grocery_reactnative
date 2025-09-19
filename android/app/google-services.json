@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "14308361650",
+    "project_id": "justskipline-grocery",
+    "storage_bucket": "justskipline-grocery.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:14308361650:android:c89c8c7b5a335df961d0ab",
+        "android_client_info": {
+          "package_name": "com.justskipline"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTvQM3FVRFkcviTfGcZOWoX8VeEMAqQ8E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
